@@ -33,7 +33,7 @@ module.exports = withPlugins([
                     return config;
                 },
                 env: {
-                    server: 'https://blackping.azurewebsites.net/',
+                    server: 'https://blackping.azurewebsites.net',
                 },
             })
         ),

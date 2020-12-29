@@ -25,15 +25,31 @@ export const actionTypes = {
 
     UPDATE_CART_SUCCESS: 'UPDATE_CART_SUCCESS',
     UPDATE_CART_ERROR: 'UPDATE_CART_ERROR',
+
+    CONFIRM_CART: 'CONFIRM_CART',
+    CONFIRM_CART_SUCCESS: 'CONFIRM_CART_SUCCESS',
+    CONFIRM_CART_FAIL: 'CONFIRM_CART_FAIL',
 };
 
-export function getCart() { 
+export function confirmCart(payload) {
+    return { type: actionTypes.CONFIRM_CART, payload };
+}
+
+export function confirmCartSuccess(payload) {
+    return { type: actionTypes.CONFIRM_CART_SUCCESS, payload };
+}
+
+export function confirmCartFail(error) {
+    return { type: actionTypes.CONFIRM_CART_CART, error };
+}
+
+export function getCart() {
     return { type: actionTypes.GET_CART };
 }
 
 export function getCartSuccess() {
     return {
-        type: actionTypes.GET_CART_SUCCESS
+        type: actionTypes.GET_CART_SUCCESS,
     };
 }
 
@@ -47,7 +63,7 @@ export function getCartError(error) {
 export function getCartSuccessFromDb(cart) {
     return {
         type: actionTypes.GET_CART_SUCCESS_DB,
-        cart
+        cart,
     };
 }
 
@@ -90,7 +106,7 @@ export function updateCartError(payload) {
 
 export function clearCart() {
     return {
-        type: actionTypes.CLEAR_CART
+        type: actionTypes.CLEAR_CART,
     };
 }
 

@@ -86,7 +86,7 @@ class ShoppingCart extends Component {
                                                 </div>
                                             </td>
                                             <td className="price">
-                                                ${product.price}
+                                                {product.price}đ
                                             </td>
                                             <td>
                                                 <div className="form-group--number">
@@ -116,9 +116,9 @@ class ShoppingCart extends Component {
                                                 </div>
                                             </td>
                                             <td>
-                                                $
                                                 {product.quantity *
                                                     product.price}
+                                                đ
                                             </td>
                                             <td>
                                                 <a
@@ -150,7 +150,7 @@ class ShoppingCart extends Component {
                                 <div className="ps-block--shopping-total">
                                     <div className="ps-block__header">
                                         <p>
-                                            Tạm tính <span> ${amount}</span>
+                                            Tạm tính <span> {amount}đ</span>
                                         </p>
                                     </div>
                                     <div className="ps-block__content">
@@ -188,7 +188,7 @@ class ShoppingCart extends Component {
                                                 : ''}
                                         </ul>
                                         <h3>
-                                            Tổng cộng <span>${amount}</span>
+                                            Tổng cộng <span>{amount}đ</span>
                                         </h3>
                                     </div>
                                 </div>

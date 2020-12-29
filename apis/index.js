@@ -25,4 +25,5 @@ export const endpoints = {
     REMOVEWISHLIST: '/wishlist/remove',
     CLEARWISHLIST: '/wishlist/clear',
     PRODUCTS: '/product/shop',
+    CONFIRMCART: '/baskets',
 };

@@ -85,10 +85,10 @@ class MiniCart extends Component {
                                 </strong>
                             </h3>
                             <figure>
-                                <Link href="/account/shopping-cart" as="/cart">
+                                <Link href="/account/shopping-cart">
                                     <a className="ps-btn">Xem giỏ hàng</a>
                                 </Link>
-                                <Link href="/account/checkout" as="/checkout">
+                                <Link href="/account/checkout">
                                     <a className="ps-btn">Thanh toán</a>
                                 </Link>
                             </figure>

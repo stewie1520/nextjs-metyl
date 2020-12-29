@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import Router from 'next/router';
-import { setShippingAddress } from '../../../../store/shipping/action';
+import { confirmCart } from '../../../../store/cart/action';
 
 import { Form, Input } from 'antd';
 
@@ -23,9 +23,15 @@ class FormCheckoutInformation extends Component {
                     city: values.city,
                     ward: values.ward,
                     district: values.district,
+                    note: values.note,
                 };
-                this.props.dispatch(setShippingAddress({ addressInfo }));
-                Router.push('/account/shipping');
+                this.props.dispatch(
+                    confirmCart({
+                        addressInfo,
+                        cartItems: this.props.cartItems,
+                    })
+                );
+                Router.push('/page/thankyou');
             } else {
             }
         });
@@ -195,6 +201,28 @@ class FormCheckoutInformation extends Component {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <div className="form-group">
+                                            <Form.Item>
+                                                {getFieldDecorator('note', {
+                                                    rules: [
+                                                        {
+                                                            required: false,
+                                                        },
+                                                    ],
+                                                })(
+                                                    <Input
+                                                        className="form-control"
+                                                        type="note"
+                                                        multiple={true}
+                                                        placeholder="Ghi chú của khách hàng"
+                                                    />
+                                                )}
+                                            </Form.Item>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="ps-form__submit">
                                     <Link href="/account/cart">
                                         <a>
@@ -238,9 +266,9 @@ class FormCheckoutInformation extends Component {
                                                                 </span>
                                                             </strong>
                                                             <small>
-                                                                $
                                                                 {product.quantity *
                                                                     product.price}
+                                                                đ
                                                             </small>
                                                         </a>
                                                     </Link>
@@ -249,7 +277,7 @@ class FormCheckoutInformation extends Component {
                                         <figure>
                                             <figcaption>
                                                 <strong>Tạm tính</strong>
-                                                <small>${amount}</small>
+                                                <small>{amount}đ</small>
                                             </figcaption>
                                         </figure>
                                         <figure className="ps-block__shipping">
