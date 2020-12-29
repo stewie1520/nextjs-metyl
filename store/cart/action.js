@@ -40,7 +40,7 @@ export function confirmCartSuccess(payload) {
 }
 
 export function confirmCartFail(error) {
-    return { type: actionTypes.CONFIRM_CART_CART, error };
+    return { type: actionTypes.CONFIRM_CART_FAIL, error };
 }
 
 export function getCart() {

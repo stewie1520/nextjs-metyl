@@ -4,10 +4,11 @@ export const initCart = {
     cartItems: [],
     amount: 0,
     cartTotal: 0,
+    isProcessingCart: false,
 };
 
-function reducer(state = initCart, action) { 
-    switch (action.type) { 
+function reducer(state = initCart, action) {
+    switch (action.type) {
         case actionTypes.GET_CART_SUCCESS:
             return {
                 ...state,
@@ -37,6 +38,20 @@ function reducer(state = initCart, action) {
             return {
                 ...state,
                 ...{ error: action.error },
+            };
+
+        case actionTypes.CONFIRM_CART:
+            return {
+                ...state,
+                isProcessingCart: true,
+            };
+        case actionTypes.CONFIRM_CART_SUCCESS:
+            return {
+                ...state,
+                isProcessingCart: false,
+                cartItems: [],
+                amount: 0,
+                cartTotal: 0,
             };
         case actionTypes.GET_CART_ERROR_DB:
             return {

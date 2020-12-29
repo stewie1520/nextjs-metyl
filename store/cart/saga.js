@@ -15,6 +15,7 @@ import {
     clearCartSuccess,
     confirmCartFail,
     confirmCartSuccess,
+    clearCart,
 } from './action';
 
 import { getAuth, getCart } from '../selectors';
@@ -39,7 +40,7 @@ export const calculateAmount = (obj) =>
         .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
         .toFixed(2);
 
-function* confirmCartSaga(payload) {
+function* confirmCartSaga({ payload }) {
     try {
         const { addressInfo, cartItems } = payload;
         const processedPayload = {
@@ -71,7 +72,9 @@ function* confirmCartSaga(payload) {
         }
 
         yield put(confirmCartSuccess(data));
+        yield put(clearCart());
     } catch (err) {
+        console.log(err);
         yield put(confirmCartFail(err));
     }
 }
@@ -176,38 +179,24 @@ function* decreaseItemQtySaga(payload) {
 }
 
 function* clearCartSaga() {
-    const auth = yield select(getAuth);
-    const emptyCart = {
-        cartItems: [],
-        amount: 0,
-        cartTotal: 0,
-    };
-    if (auth && auth.isLoggedIn) {
-        try {
-            const res = yield call(axios.post, server + endpoints.CLEARCART, {
-                auth: auth,
-            });
-            if (!res.data.errors) {
-                yield put(clearCartSuccess(emptyCart));
-            }
-        } catch (err) {
-            yield put(updateCartError(err));
-        }
-    } else {
-        try {
-            yield put(clearCartSuccess(emptyCart));
-        } catch (err) {
-            yield put(updateCartError(err));
-        }
+    try {
+        const emptyCart = {
+            cartItems: [],
+            amount: 0,
+            cartTotal: 0,
+        };
+        yield put(clearCartSuccess(emptyCart));
+    } catch (err) {
+        yield put(updateCartError(err));
     }
 }
 
 export default function* rootSaga() {
+    yield all([takeEvery(actionTypes.CONFIRM_CART, confirmCartSaga)]);
     yield all([takeEvery(actionTypes.GET_CART, getCartSaga)]);
     yield all([takeEvery(actionTypes.ADD_ITEM, addItemSaga)]);
     yield all([takeEvery(actionTypes.REMOVE_ITEM, removeItemSaga)]);
     yield all([takeEvery(actionTypes.INCREASE_QTY, increaseQtySaga)]);
     yield all([takeEvery(actionTypes.DECREASE_QTY, decreaseItemQtySaga)]);
     yield all([takeEvery(actionTypes.CLEAR_CART, clearCartSaga)]);
-    yield all([takeEvery(actionTypes.CONFIRM_CART, confirmCartSaga)]);
 }
