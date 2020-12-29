@@ -31,6 +31,18 @@ function reducer(state = initialState, action) {
                     },
                 },
             };
+        case actionTypes.GET_PRODUCTS_BY_KEYWORD_SUCCESS:
+            return {
+                ...state,
+                ...{
+                    allProducts: action.payload.data.data,
+                    pagination: {
+                        ...state.pagination,
+                        totalPage: action.payload.data.pagination.totalPage,
+                        currentPage: action.payload.data.pagination.currentPage,
+                    },
+                },
+            };
         case actionTypes.GET_PRODUCTS_BEST_SALE_SUCCESS:
             return {
                 ...state,

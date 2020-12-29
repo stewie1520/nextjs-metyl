@@ -9,14 +9,14 @@ export default (data) => {
         if (depth == 1) {
             return {
                 text: root.name,
-                url: root.id == 0 ? '/' : `?category=${root.id}`,
+                url: root.id == 0 ? '/' : `/?category=${root.id}`,
             };
         }
 
         if (depth > 1) {
             return {
                 text: root.name,
-                url: root.id == 0 ? '/' : `?category=${root.id}`,
+                url: root.id == 0 ? '/' : `/?category=${root.id}`,
                 extraClass: 'menu-item-has-children has-mega-menu',
                 subClass: 'sub-menu',
                 mega: true,
@@ -28,7 +28,7 @@ export default (data) => {
                                   megaItems: root.children.map((child) => {
                                       return {
                                           text: child.name,
-                                          url: `?category=${child.id}`,
+                                          url: `/?category=${child.id}`,
                                       };
                                   }),
                               },
@@ -39,7 +39,7 @@ export default (data) => {
                                   megaItems: child.children.map((child3rd) => {
                                       return {
                                           text: child3rd.name,
-                                          url: `?category=${child3rd.id}`,
+                                          url: `/?category=${child3rd.id}`,
                                       };
                                   }),
                               };

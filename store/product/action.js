@@ -8,6 +8,7 @@ export const actionTypes = {
     GET_PRODUCTS_BY_PRICE_RANGE: 'GET_PRODUCTS_BY_PRICE_RANGE',
     GET_PRODUCTS_BY_BRAND: 'GET_PRODUCTS_BY_BRAND',
     GET_PRODUCTS_BY_KEYWORD: 'GET_PRODUCTS_BY_KEYWORD',
+    GET_PRODUCTS_BY_KEYWORD_SUCCESS: 'GET_PRODUCTS_BY_KEYWORD_SUCCESS',
     GET_PRODUCT_BY_ID: 'GET_PRODUCT_BY_ID',
     GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
     CHANGE_PRODUCT_PAGINATION: 'CHANGE_PRODUCT_PAGINATION',
@@ -141,10 +142,23 @@ export function getProductsByBrand(brand) {
         brand,
     };
 }
-export function getProductsByKeyword(keyword) {
+export function getProductsByKeyword({ keyword, category }) {
     return {
         type: actionTypes.GET_PRODUCTS_BY_KEYWORD,
-        keyword,
+        payload: {
+            request: {
+                url: '/product/shop',
+                paramsSerializer: (params) =>
+                    qs.stringify(params, { indices: false }),
+                params: {
+                    isVariant: false,
+                    ...(category ? { categoryId: [category] } : {}),
+                    name: keyword,
+                    page: 1,
+                    perpage: 10,
+                },
+            },
+        },
     };
 }
 

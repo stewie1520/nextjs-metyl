@@ -16,22 +16,28 @@ class SearchResult extends Component {
         results: [],
     };
 
-    componentDidMount() {
-        const { query } = this.props.router;
-        if (query) {
-            this.props.dispatch(getProductsByKeyword(query.keyword));
-        }
-    }
-
     handleChangeViewMode = (event) => {
         event.preventDefault();
         this.setState({ listView: !this.state.listView });
     };
 
     render() {
-        const { allProducts } = this.props;
-        let currentProducts = this.state.products;
+        const {
+            products: allProducts,
+            pagination,
+            keyword,
+            category,
+        } = this.props;
         const viewMode = this.state.listView;
+        let queryString = '';
+
+        if (keyword) {
+            queryString += `&keyword=${keyword}`;
+        }
+        if (category) {
+            queryString += `&category=${category}`;
+        }
+
         return (
             <div className="ps-layout--shop">
                 <ShopWidget />
@@ -115,21 +121,35 @@ class SearchResult extends Component {
                             <div className="ps-shopping__footer">
                                 <div className="ps-pagination">
                                     <ul className="pagination">
+                                        {pagination.currentPage !== 1 && (
+                                            <li>
+                                                <a
+                                                    href={`/search?page=${
+                                                        pagination.currentPage -
+                                                        1
+                                                    }${queryString}`}>
+                                                    Trước
+                                                    <i className="icon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                        )}
+
                                         <li className="active">
-                                            <a href="#">1</a>
+                                            <a>{pagination.currentPage}</a>
                                         </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Tiếp
-                                                <i className="icon-chevron-right"></i>
-                                            </a>
-                                        </li>
+                                        {pagination.currentPage !==
+                                            pagination.totalPage && (
+                                            <li>
+                                                <a
+                                                    href={`/search?page=${
+                                                        pagination.currentPage +
+                                                        1
+                                                    }${queryString}`}>
+                                                    Tiếp
+                                                    <i className="icon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
                             </div>

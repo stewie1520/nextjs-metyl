@@ -7,6 +7,7 @@ class SearchHeader extends Component {
         super(props);
         this.state = {
             keyword: '',
+            category: 0,
         };
     }
 
@@ -20,10 +21,23 @@ class SearchHeader extends Component {
         }
     }
 
+    handleChangeCategory(e) {
+        this.setState({
+            category: e.target.value,
+        });
+    }
+
     handleSubmit(e) {
         e.preventDefault();
         const keyword = this.state.keyword;
-        Router.push(`/search?keyword=${keyword}`);
+
+        if (this.state.category === 0) {
+            Router.push(`/search?keyword=${keyword}`);
+        } else {
+            Router.push(
+                `/search?category=${this.state.category}&keyword=${keyword}`
+            );
+        }
     }
 
     render() {
@@ -40,7 +54,10 @@ class SearchHeader extends Component {
                 action="/"
                 onSubmit={this.handleSubmit.bind(this)}>
                 <div className="ps-form__categories">
-                    <select className="form-control">
+                    <select
+                        className="form-control"
+                        value={this.state.category}
+                        onChange={this.handleChangeCategory.bind(this)}>
                         {rawCategoriesWithDefault.map((category) => (
                             <option value={category.id} key={category.id}>
                                 {category.name}
