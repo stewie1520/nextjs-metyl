@@ -24,7 +24,25 @@ class LayoutShop extends Component {
     };
 
     render() {
-        const { products: allProducts, pagination, query } = this.props;
+        const {
+            bestSaleProducts,
+            recommendProducts,
+            products: allProducts,
+            pagination,
+            minPrice,
+            maxPrice,
+            query,
+        } = this.props;
+
+        let filteredPriceProducts = allProducts.filter(
+            (p) => p.price >= minPrice
+        );
+        if (maxPrice !== 10000000) {
+            filteredPriceProducts = filteredPriceProducts.filter(
+                (p) => p.price <= maxPrice
+            );
+        }
+
         const queryString = _isUndefined(query.category)
             ? ''
             : `&categoryId=${query.category}`;
@@ -35,13 +53,15 @@ class LayoutShop extends Component {
                 <ShopWidget />
                 <div className="ps-layout__right">
                     <div className="ps-shopping">
-                        <BestSaleItems />
-                        <RecommendItems />
+                        <BestSaleItems bestSaleProducts={bestSaleProducts} />
+                        <RecommendItems recommendProducts={recommendProducts} />
                         <div className="ps-shopping__header">
                             <p>
                                 Có
                                 <strong className="mr-2 ml-2">
-                                    {allProducts ? allProducts.length : 0}
+                                    {filteredPriceProducts
+                                        ? filteredPriceProducts.length
+                                        : 0}
                                 </strong>
                                 sản phẩm
                             </p>
@@ -93,21 +113,27 @@ class LayoutShop extends Component {
                             {viewMode === true ? (
                                 <div className="ps-shopping-product">
                                     <div className="row">
-                                        {allProducts && allProducts.length > 0
-                                            ? allProducts.map((item) => (
-                                                  <div
-                                                      className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 "
-                                                      key={item.id}>
-                                                      <Product product={item} />
-                                                  </div>
-                                              ))
+                                        {filteredPriceProducts &&
+                                        filteredPriceProducts.length > 0
+                                            ? filteredPriceProducts.map(
+                                                  (item) => (
+                                                      <div
+                                                          className="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 "
+                                                          key={item.id}>
+                                                          <Product
+                                                              product={item}
+                                                          />
+                                                      </div>
+                                                  )
+                                              )
                                             : ''}
                                     </div>
                                 </div>
                             ) : (
                                 <div className="ps-shopping-product">
-                                    {allProducts && allProducts.length > 0
-                                        ? allProducts.map((item) => (
+                                    {filteredPriceProducts &&
+                                    filteredPriceProducts.length > 0
+                                        ? filteredPriceProducts.map((item) => (
                                               <ProductWide
                                                   product={item}
                                                   key={item.id}
