@@ -24,7 +24,7 @@ class BestSaleItems extends Component {
         const carouselSetting = {
             dots: false,
             arrows: false,
-            infinite: true,
+            infinite: false,
             speed: 500,
             slidesToShow: 6,
             slidesToScroll: 1,
@@ -89,7 +89,7 @@ class BestSaleItems extends Component {
                         ref={(slider) => (this.slider = slider)}
                         {...carouselSetting}>
                         {bestSaleProducts.map((product, index) => {
-                            if (index > 0 && index < 9) {
+                            if (index < 9) {
                                 return (
                                     <Product
                                         product={product}

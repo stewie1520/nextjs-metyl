@@ -50,6 +50,7 @@ class SearchResult extends Component {
                                     <strong>
                                         {allProducts ? allProducts.length : 0}
                                     </strong>
+                                    <span className="ml-1">sản phẩm</span>
                                 </p>
                             ) : (
                                 <p>Không tìm thấy bất kỳ sản phẩm nào</p>
@@ -92,7 +93,14 @@ class SearchResult extends Component {
                             </div>
                         </div>
                         <div className="ps-shopping__content">
-                            {viewMode === true ? (
+                            {!allProducts || allProducts.length === 0 ? (
+                                <p style={{ textAlign: 'center' }}>
+                                    <img
+                                        src="/static/img/404-green.svg"
+                                        style={{ height: '200px' }}
+                                    />
+                                </p>
+                            ) : viewMode === true ? (
                                 <div className="ps-shopping-product">
                                     <div className="row">
                                         {allProducts && allProducts.length > 0
@@ -138,18 +146,19 @@ class SearchResult extends Component {
                                             <a>{pagination.currentPage}</a>
                                         </li>
                                         {pagination.currentPage !==
-                                            pagination.totalPage && (
-                                            <li>
-                                                <a
-                                                    href={`/search?page=${
-                                                        pagination.currentPage +
-                                                        1
-                                                    }${queryString}`}>
-                                                    Tiếp
-                                                    <i className="icon-chevron-right"></i>
-                                                </a>
-                                            </li>
-                                        )}
+                                            pagination.totalPage &&
+                                            pagination.totalPage !== 0 && (
+                                                <li>
+                                                    <a
+                                                        href={`/search?page=${
+                                                            pagination.currentPage +
+                                                            1
+                                                        }${queryString}`}>
+                                                        Tiếp
+                                                        <i className="icon-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            )}
                                     </ul>
                                 </div>
                             </div>

@@ -69,8 +69,7 @@ class LayoutShop extends Component {
                                 <select
                                     className="ps-select form-control"
                                     data-placeholder="Sắp xếp">
-                                    <option>Theo thời gian</option>
-                                    <option>Theo độ phổ biến</option>
+                                    <option>Sản phẩm mới hơn</option>
                                     <option>Giá tăng dần</option>
                                     <option>Giá giảm dần</option>
                                 </select>
