@@ -49,11 +49,18 @@ class HeaderTechnology extends Component {
                     <div className="container">
                         <div className="header__content-left">
                             <Link href="/">
-                                <a className="ps-logo">
+                                <a
+                                    className="ps-logo"
+                                    style={{ display: 'flex' }}>
                                     <img
-                                        src="/static/img/logo-technology.png"
+                                        src="/static/img/logo.svg"
+                                        style={{
+                                            width: '40px',
+                                            marginTop: '-8px',
+                                        }}
                                         alt="martfury"
                                     />
+                                    <span>METYL</span>
                                 </a>
                             </Link>
                             <div className="menu--product-categories">
