@@ -39,10 +39,24 @@ class InformationQuickView extends Component {
                 <div className="ps-product__meta"></div>
                 {product.sale === true ? (
                     <h4 className="ps-product__price sale">
-                        đ{product.price} <del>đ{product.salePrice}</del>
+                        {Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(product.price)}
+                        <del>
+                            {Intl.NumberFormat('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                            }).format(product.salePrice)}
+                        </del>
                     </h4>
                 ) : (
-                    <h4 className="ps-product__price">${product.price}</h4>
+                    <h4 className="ps-product__price">
+                        {Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        }).format(product.price)}
+                    </h4>
                 )}
                 <div className="ps-product__desc">
                     <ul className="ps-list--dot">
@@ -81,11 +95,8 @@ class InformationQuickView extends Component {
                     </a>
                 </div>
                 <div className="ps-product__specification">
-                    <p>
-                        <strong>SKU:</strong> SF1133569600-1
-                    </p>
                     <p className="categories">
-                        <strong> Categories:</strong>
+                        <strong> Loại sản phẩm:</strong>
                         {_map(product.categories, (c) => (
                             <Link href={`/?category=${c.value}`}>
                                 <a>{c.name}</a>

@@ -75,7 +75,7 @@ class ThumbnailDefault extends Component {
         const { product } = this.props;
         const { photoIndex, isOpen } = this.state;
         const productImages = [];
-        product.variants.map(variant => {
+        product.variants.map((variant) => {
             productImages.push(variant.thumbnail);
         });
 
@@ -85,14 +85,14 @@ class ThumbnailDefault extends Component {
                     <div className="ps-wrapper">
                         <Slider
                             {...gallerySetting}
-                            ref={slider => (this.slider1 = slider)}
+                            ref={(slider) => (this.slider1 = slider)}
                             asNavFor={this.state.variantCarousel}
                             className="ps-product__gallery ps-carousel inside">
                             {product.variants.map((variant, index) => (
                                 <div className="item" key={variant.thumbnail}>
                                     <a
                                         href="#"
-                                        onClick={e =>
+                                        onClick={(e) =>
                                             this.handleOpenLightbox(e, index)
                                         }>
                                         <img
@@ -107,7 +107,7 @@ class ThumbnailDefault extends Component {
                 </figure>
                 <Slider
                     asNavFor={this.state.galleryCarousel}
-                    ref={slider => (this.slider2 = slider)}
+                    ref={(slider) => (this.slider2 = slider)}
                     swipeToSlide={true}
                     arrows={false}
                     slidesToShow={3}
@@ -115,7 +115,7 @@ class ThumbnailDefault extends Component {
                     focusOnSelect={true}
                     {...variantSetting}
                     className="ps-product__variants">
-                    {product.variants.map(variant => (
+                    {product.variants.map((variant) => (
                         <div className="item" key={variant.thumbnail}>
                             <img src={variant.thumbnail} alt="martfury" />
                         </div>

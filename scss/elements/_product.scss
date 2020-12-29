@@ -46,7 +46,7 @@
     .ps-product__price {
         position: relative;
         font-size: 16px;
-        color: $color-heading;
+        color: $color-dark-2;
 
         &.sale {
             color: #f30;
@@ -731,7 +731,7 @@
         margin-bottom: 20px;
         font-size: 24px;
         font-weight: 600;
-        color: $color-heading;
+        color: $color-dark-2;
 
         &.sale {
             color: $color-danger;
@@ -768,7 +768,7 @@
         border-bottom: 1px solid #e1e1e1;
 
         p {
-            color: $color-heading;
+            color: $color-dark-2;
 
             a {
                 text-transform: uppercase;

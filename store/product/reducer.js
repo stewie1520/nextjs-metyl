@@ -1,4 +1,5 @@
 import { actionTypes } from './action';
+import _filter from 'lodash/filter';
 
 export const initialState = {
     allProducts: null,
@@ -8,6 +9,7 @@ export const initialState = {
     rawCategories: [],
     bestSaleProducts: [],
     recommendProducts: [],
+    relatedProducts: [],
     minPrice: 0,
     maxPrice: 10000000,
     pagination: {
@@ -19,6 +21,16 @@ export const initialState = {
 
 function reducer(state = initialState, action) {
     switch (action.type) {
+        case actionTypes.GET_PRODUCTS_RELATED_SUCCESS:
+            return {
+                ...state,
+                ...{
+                    relatedProducts: _filter(
+                        action.payload.data.data,
+                        (p) => p.id !== state.singleProduct.id
+                    ),
+                },
+            };
         case actionTypes.GET_PRODUCTS_BY_CATEGORY_SUCCESS:
             return {
                 ...state,
@@ -99,7 +111,7 @@ function reducer(state = initialState, action) {
         case actionTypes.GET_PRODUCT_BY_ID_SUCCESS:
             return {
                 ...state,
-                ...{ singleProduct: action.data },
+                ...{ singleProduct: action.payload.data.data },
             };
 
         case actionTypes.GET_PRODUCTS_ERROR:

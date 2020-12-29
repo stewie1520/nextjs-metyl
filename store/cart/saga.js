@@ -20,17 +20,25 @@ import {
 
 import { getAuth, getCart } from '../selectors';
 
-const modalSuccess = (type) => {
+const modalSuccess = (
+    type,
+    message = 'Lựa chọn hợp lý',
+    description = 'Sản phẩm đã được thêm vào giỏ hàng của bạn!'
+) => {
     notification[type]({
-        message: 'Lựa chọn hợp lý',
-        description: 'Sản phẩm đã được thêm vào giỏ hàng của bạn!',
+        message,
+        description,
         duration: 1,
     });
 };
-const modalWarning = (type) => {
+const modalWarning = (
+    type,
+    message = 'Hmm, đã xoá',
+    description = 'Sản phẩm đã được xoá khỏi giỏ hàng của bạn'
+) => {
     notification[type]({
-        message: 'Hmm, đã xoá',
-        description: 'Sản phẩm đã được xoá khỏi giỏ hàng của bạn',
+        message,
+        description,
         duration: 1,
     });
 };
@@ -89,6 +97,13 @@ function* getCartSaga() {
 
 function* addItemSaga(payload) {
     const { product } = payload;
+    if (product.status !== 2) {
+        modalWarning(
+            'warning',
+            'Không thể thêm vào giỏ hàng',
+            'Sản phẩm đã ngừng kinh doanh, không thể thêm vào giỏ hàng'
+        );
+    }
     try {
         const localCart = JSON.parse(localStorage.getItem('persist:metyl'))
             .cart;

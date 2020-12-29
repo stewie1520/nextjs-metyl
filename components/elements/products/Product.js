@@ -94,17 +94,23 @@ class Product extends Component {
                         </Link>
                         {product.sale === true ? (
                             <p className="ps-product__price sale">
-                                {currency ? currency.symbol : 'vnđ'}
-                                {product.price}
+                                {Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                }).format(product.price)}
                                 <del className="ml-2">
-                                    {currency ? currency.symbol : 'vnđ'}
-                                    {product.salePrice}
+                                    {Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND',
+                                    }).format(product.salePrice)}
                                 </del>
                             </p>
                         ) : (
                             <p className="ps-product__price">
-                                {currency ? currency.symbol : 'vnđ'}
-                                {product.price}
+                                {Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                }).format(product.price)}
                             </p>
                         )}
                     </div>
@@ -116,17 +122,23 @@ class Product extends Component {
                         </Link>
                         {product.sale === true ? (
                             <p className="ps-product__price sale">
-                                {currency ? currency.symbol : 'vnđ'}
-                                {product.price}{' '}
+                                {Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                }).format(product.price)}{' '}
                                 <del className="ml-2">
-                                    {currency ? currency.symbol : 'vnđ'}
-                                    {product.salePrice}
+                                    {Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND',
+                                    }).format(product.salePrice)}
                                 </del>
                             </p>
                         ) : (
                             <p className="ps-product__price">
-                                {currency ? currency.symbol : 'vnđ'}
-                                {product.price}
+                                {Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND',
+                                }).format(product.price)}
                             </p>
                         )}
                     </div>

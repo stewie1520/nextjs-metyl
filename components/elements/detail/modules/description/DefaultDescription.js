@@ -9,12 +9,13 @@ class DefaultDescription extends Component {
         super(props);
     }
     render() {
+        const { product } = this.props;
         return (
             <div>
                 <div className="ps-product__content ps-tab-root">
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="Thông tin chi tiết" key="1">
-                            <PartialDescription />
+                            <PartialDescription product={product} />
                         </TabPane>
                     </Tabs>
                 </div>

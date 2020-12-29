@@ -69,8 +69,11 @@ class MiniCart extends Component {
                                                   {product.vendor}
                                               </p>
                                               <small>
-                                                  {product.quantity} x $
-                                                  {product.price}
+                                                  {product.quantity} x
+                                                  {Intl.NumberFormat('vi-VN', {
+                                                      style: 'currency',
+                                                      currency: 'VND',
+                                                  }).format(product.price)}
                                               </small>
                                           </div>
                                       </div>
@@ -81,7 +84,10 @@ class MiniCart extends Component {
                             <h3>
                                 Tạm tính:
                                 <strong>
-                                    ${cart.amount ? cart.amount : 0}
+                                    {Intl.NumberFormat('vi-VN', {
+                                        style: 'currency',
+                                        currency: 'VND',
+                                    }).format(cart.amount ? cart.amount : 0)}
                                 </strong>
                             </h3>
                             <figure>

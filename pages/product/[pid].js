@@ -3,14 +3,17 @@ import Router from 'next/router';
 import { connect } from 'react-redux';
 
 import FooterFullwidth from '../../components/shared/footers/FooterFullwidth';
-import CustomerBought from '../../components/partials/product/CustomerBought';
 import ProductDetailFullwidth from '../../components/elements/detail/ProductDetailFullwidth';
 import ProductWidgets from '../../components/partials/product/ProductWidgets';
 import NavigationList from '../../components/shared/navigation/NavigationList';
 import BreadCrumb from '../../components/elements/BreadCrumb';
 import HeaderMobileProduct from '../../components/shared/header-mobile/HeaderMobileProduct';
-import { getProductsById } from '../../store/product/action';
+import {
+    getRelatedProducts,
+    getProductsById,
+} from '../../store/product/action';
 import HeaderTechnology from '../../components/shared/headers/HeaderTechnology';
+import _isEqual from 'lodash/isEqual';
 
 class ProductDefaultPage extends React.Component {
     constructor(props) {
@@ -18,8 +21,11 @@ class ProductDefaultPage extends React.Component {
     }
 
     static async getInitialProps(ctx) {
-        ctx.store.dispatch(getProductsById(ctx.query.pid));
-        return { query: ctx.query };
+        await ctx.store.dispatch(getProductsById(ctx.query.pid));
+        return {
+            query: ctx.query,
+            singleProduct: ctx.store.getState().product.singleProduct,
+        };
     }
 
     componentDidMount() {
@@ -27,14 +33,18 @@ class ProductDefaultPage extends React.Component {
         if (isNaN(pid)) {
             Router.push('/page/page-404');
         }
+
+        this.props.dispatch(
+            getRelatedProducts(this.props.singleProduct.categories[0].id)
+        );
     }
 
     render() {
-        const { singleProduct } = this.props;
+        const { singleProduct, relatedProducts } = this.props;
         // if(singleProduct === null) return
         const breadCrumb = [
             {
-                text: 'Home',
+                text: 'Trang chủ',
                 url: '/',
             },
             {
@@ -57,10 +67,9 @@ class ProductDefaultPage extends React.Component {
                                 />
                             </div>
                             <div className="ps-page__right">
-                                <ProductWidgets />
+                                <ProductWidgets products={relatedProducts} />
                             </div>
                         </div>
-                        <CustomerBought layout="fullwidth" />
                     </div>
                 </div>
                 <FooterFullwidth />

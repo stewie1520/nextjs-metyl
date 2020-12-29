@@ -4,20 +4,13 @@ import ThumbnailDefault from './modules/thumbnail/ThumbnailDefault';
 import InformationDefault from './modules/information/InformationDefault';
 import DefaultDescription from './modules/description/DefaultDescription';
 
-import { getProductsById } from '../../../store/product/action';
-
 class ProductDetailFullwidth extends Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-       /* const { productId } = this.props;
-        this.props.dispatch(getProductsById(productId));*/
-    }
-
     render() {
-        const {  product } = this.props;
+        const { product } = this.props;
         return (
             <div className="ps-product--detail ps-product--fullwidth">
                 {product ? (
@@ -28,12 +21,12 @@ class ProductDetailFullwidth extends Component {
                 ) : (
                     ''
                 )}
-                <DefaultDescription />
+                <DefaultDescription product={product} />
             </div>
         );
     }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return state.product;
 };
 

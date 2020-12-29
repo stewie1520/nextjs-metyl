@@ -1,9 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { sameBrands } from '../../../public/static/data/product';
 import Product from '../../../components/elements/products/Product';
 
-const ProductWidgets = () => (
+const ProductWidgets = ({ products }) => (
     <section>
         <aside className="widget widget_ads">
             <Link href="/shop">
@@ -15,8 +14,8 @@ const ProductWidgets = () => (
         <aside className="widget widget_same-brand">
             <h3>Sản phẩm tương tự</h3>
             <div className="widget__content">
-                {sameBrands &&
-                    sameBrands.map((product) => (
+                {products &&
+                    products.map((product) => (
                         <Product product={product} key={product.id} />
                     ))}
             </div>

@@ -23,6 +23,10 @@ export const actionTypes = {
     GET_PRODUCTS_RECOMMENDS: 'GET_PRODUCTS_RECOMMENDS',
     GET_PRODUCTS_RECOMMENDS_SUCCESS: 'GET_PRODUCTS_RECOMMENDS_SUCCESS',
     GET_PRODUCTS_RECOMMENDS_FAIL: 'GET_PRODUCTS_RECOMMENDS_FAIL',
+
+    GET_PRODUCTS_RELATED: 'GET_PRODUCTS_RELATED',
+    GET_PRODUCTS_RELATED_SUCCESS: 'GET_PRODUCTS_RELATED_SUCCESS',
+    GET_PRODUCTS_RELATED_FAIL: 'GET_PRODUCTS_RELATED_FAIL',
 };
 
 export function getProductsRecommend() {
@@ -136,6 +140,25 @@ export function getProductsByCategory(category) {
     };
 }
 
+export function getRelatedProducts(category) {
+    return {
+        type: actionTypes.GET_PRODUCTS_RELATED,
+        payload: {
+            request: {
+                url: '/product/shop',
+                paramsSerializer: (params) =>
+                    qs.stringify(params, { indices: false }),
+                params: {
+                    isVariant: false,
+                    categoryId: [category],
+                    page: 1,
+                    perpage: 3,
+                },
+            },
+        },
+    };
+}
+
 export function getProductsByBrand(brand) {
     return {
         type: actionTypes.GET_PRODUCTS_BY_BRAND,
@@ -165,7 +188,11 @@ export function getProductsByKeyword({ keyword, category }) {
 export function getProductsById(id) {
     return {
         type: actionTypes.GET_PRODUCT_BY_ID,
-        id,
+        payload: {
+            request: {
+                url: `/product/shop/${id}`,
+            },
+        },
     };
 }
 
