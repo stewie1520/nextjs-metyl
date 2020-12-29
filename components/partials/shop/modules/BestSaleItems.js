@@ -20,6 +20,7 @@ class BestSaleItems extends Component {
     };
 
     render() {
+        const { bestSaleProducts } = this.props;
         const carouselSetting = {
             dots: false,
             arrows: false,
@@ -69,7 +70,7 @@ class BestSaleItems extends Component {
         return (
             <div className="ps-block--shop-features">
                 <div className="ps-block__header">
-                    <h3>Sản phẩm bán chạy</h3>
+                    <h3>Sản phẩm giảm giá</h3>
                     <div className="ps-block__navigation">
                         <a
                             className="ps-carousel__prev"
@@ -87,8 +88,8 @@ class BestSaleItems extends Component {
                     <Slider
                         ref={(slider) => (this.slider = slider)}
                         {...carouselSetting}>
-                        {products.map((product, index) => {
-                            if (index > 6 && index < 15) {
+                        {bestSaleProducts.map((product, index) => {
+                            if (index > 0 && index < 9) {
                                 return (
                                     <Product
                                         product={product}

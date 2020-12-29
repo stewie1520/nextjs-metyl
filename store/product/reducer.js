@@ -5,6 +5,11 @@ export const initialState = {
     singleProduct: null,
     error: false,
     categories: [],
+    rawCategories: [],
+    bestSaleProducts: [],
+    recommendProducts: [],
+    minPrice: 0,
+    maxPrice: 10000000,
     pagination: {
         totalPage: 1,
         currentPage: 1,
@@ -26,10 +31,34 @@ function reducer(state = initialState, action) {
                     },
                 },
             };
+        case actionTypes.GET_PRODUCTS_BEST_SALE_SUCCESS:
+            return {
+                ...state,
+                ...{
+                    bestSaleProducts: action.payload.data.data,
+                },
+            };
+        case actionTypes.GET_PRODUCTS_RECOMMENDS_SUCCESS:
+            return {
+                ...state,
+                ...{
+                    recommendProducts: action.payload.data.data,
+                },
+            };
+
+        case actionTypes.GET_PRODUCTS_BY_PRICE_RANGE:
+            return {
+                ...state,
+                ...{
+                    minPrice: action.payload[0],
+                    maxPrice: action.payload[1],
+                },
+            };
         case actionTypes.GET_ALL_CATEGORIES_SUCCESS:
             return {
                 ...state,
                 ...{
+                    rawCategories: action.data,
                     categories: action.data.map((d) => {
                         return {
                             text: d.name,

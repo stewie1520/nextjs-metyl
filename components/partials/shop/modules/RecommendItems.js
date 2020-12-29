@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 
-import { products } from '../../../../public/static/data/product';
 import Product from '../../../elements/products/Product';
 
 class RecommendItems extends Component {
@@ -20,6 +19,7 @@ class RecommendItems extends Component {
     };
 
     render() {
+        const { recommendProducts } = this.props;
         const carouselSetting = {
             dots: false,
             arrows: false,
@@ -69,7 +69,7 @@ class RecommendItems extends Component {
         return (
             <div className="ps-block--shop-features">
                 <div className="ps-block__header">
-                    <h3>Sản phẩm đề xuất</h3>
+                    <h3>Sản phẩm mới</h3>
                     <div className="ps-block__navigation">
                         <a
                             className="ps-carousel__prev"
@@ -87,8 +87,8 @@ class RecommendItems extends Component {
                     <Slider
                         ref={(slider) => (this.slider = slider)}
                         {...carouselSetting}>
-                        {products.map((product, index) => {
-                            if (index > 15 && index < 30) {
+                        {recommendProducts.map((product, index) => {
+                            if (index < 15) {
                                 return (
                                     <Product
                                         product={product}

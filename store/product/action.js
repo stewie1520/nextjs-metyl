@@ -15,7 +15,48 @@ export const actionTypes = {
     GET_ALL_CATEGORIES: 'GET_ALL_CATEGORIES',
     GET_ALL_CATEGORIES_SUCCESS: 'GET_ALL_CATEGORIES_SUCCESS',
     GET_ALL_CATEGORIES_FAIL: 'GET_ALL_CATEGORIES_FAIL',
+    GET_PRODUCTS_BEST_SALE: 'GET_PRODUCTS_BEST_SALE',
+    GET_PRODUCTS_BEST_SALE_SUCCESS: 'GET_PRODUCTS_BEST_SALE_SUCCESS',
+    GET_PRODUCTS_BEST_SALE_FAIL: 'GET_PRODUCTS_BEST_SALE_FAIL',
+
+    GET_PRODUCTS_RECOMMENDS: 'GET_PRODUCTS_RECOMMENDS',
+    GET_PRODUCTS_RECOMMENDS_SUCCESS: 'GET_PRODUCTS_RECOMMENDS_SUCCESS',
+    GET_PRODUCTS_RECOMMENDS_FAIL: 'GET_PRODUCTS_RECOMMENDS_FAIL',
 };
+
+export function getProductsRecommend() {
+    return {
+        type: actionTypes.GET_PRODUCTS_RECOMMENDS,
+        payload: {
+            request: {
+                url: '/product/shop',
+                params: {
+                    sortByDate: true,
+                    isVariant: false,
+                    page: 1,
+                    perpage: 10,
+                },
+            },
+        },
+    };
+}
+
+export function getProductsBestSale() {
+    return {
+        type: actionTypes.GET_PRODUCTS_BEST_SALE,
+        payload: {
+            request: {
+                url: '/product/shop',
+                params: {
+                    isDiscount: true,
+                    isVariant: false,
+                    page: 1,
+                    perpage: 10,
+                },
+            },
+        },
+    };
+}
 
 export function getProducts(pagination) {
     return {

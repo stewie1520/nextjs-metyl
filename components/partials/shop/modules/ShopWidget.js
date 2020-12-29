@@ -13,17 +13,9 @@ import _isEqual from 'lodash/isEqual';
 class ShopWidget extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            priceMin: 0,
-            priceMax: 2000,
-        };
     }
 
     handleChangeRange(value) {
-        this.setState({
-            priceMin: value[0],
-            priceMax: value[1],
-        });
         this.props.dispatch(getProductsByPrice(value));
     }
 
@@ -33,8 +25,12 @@ class ShopWidget extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.props.dispatch(getProductsByPrice([0, 10000000]));
+    }
+
     render() {
-        const { categories: shopCategories } = this.props;
+        const { categories: shopCategories, minPrice, maxPrice } = this.props;
         return (
             <div className="ps-layout__left">
                 <aside className="widget widget_shop">
@@ -54,13 +50,13 @@ class ShopWidget extends Component {
                     <figure>
                         <Slider
                             range
-                            defaultValue={[0, 2000]}
-                            max={2000}
+                            defaultValue={[minPrice, maxPrice]}
+                            max={10000000}
                             onAfterChange={this.handleChangeRange.bind(this)}
                         />
                         <p>
-                            Price: ${this.state.priceMin} - $
-                            {this.state.priceMax}
+                            Từ: {minPrice}đ đến
+                            {maxPrice}đ
                         </p>
                     </figure>
                 </aside>

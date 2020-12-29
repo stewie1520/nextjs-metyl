@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Link from 'next/link';
 import SearchHeader from './modules/SearchHeader';
-import menuData from '../../../public/static/data/menu';
 import Menu from '../../elements/menu/Menu';
 import ElectronicHeaderActions from './modules/ElectronicHeaderActions';
+import buildMenu from '../../../util/buildMenuFromFlatCategories';
 
 class HeaderTechnology extends Component {
     constructor({ props }) {
@@ -36,6 +37,12 @@ class HeaderTechnology extends Component {
     };
 
     render() {
+        const { rawCategories } = this.props;
+        const rawCategoriesWithDefault = [
+            { id: 0, name: 'Tất cả', children: [] },
+            ...rawCategories,
+        ];
+        const hieracyCategories = buildMenu(rawCategoriesWithDefault);
         return (
             <header className="header header--standard" id="headerSticky">
                 <div className="header__content">
@@ -55,7 +62,7 @@ class HeaderTechnology extends Component {
                                 </div>
                                 <div className="menu__content">
                                     <Menu
-                                        data={menuData.product_categories}
+                                        data={hieracyCategories}
                                         className="menu--dropdown"
                                     />
                                 </div>
@@ -74,4 +81,8 @@ class HeaderTechnology extends Component {
     }
 }
 
-export default HeaderTechnology;
+const mapStateToProps = (state) => {
+    return state.product;
+};
+
+export default connect(mapStateToProps)(HeaderTechnology);
