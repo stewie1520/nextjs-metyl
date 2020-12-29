@@ -17,18 +17,31 @@ class ShopDefaultPage extends React.Component {
     static async getInitialProps(ctx) {
         if (Object.entries(ctx.query).length > 0) {
             if (ctx.query.category) {
-                ctx.store.dispatch(getProductsByCategory(ctx.query.category));
+                await ctx.store.dispatch(
+                    getProductsByCategory(ctx.query.category)
+                );
+            } else if (ctx.query.page) {
+                await ctx.store.dispatch(
+                    getProducts({ currentPage: ctx.query.page, limit: 10 })
+                );
             } else {
-                await ctx.store.dispatch(getProducts());
+                await ctx.store.dispatch(
+                    getProducts(ctx.store.getState().product.pagination)
+                );
             }
         } else {
-            await ctx.store.dispatch(getProducts());
+            await ctx.store.dispatch(
+                getProducts(ctx.store.getState().product.pagination)
+            );
         }
-        return { query: ctx.query, allProducts: ctx.store.getState().product };
+        return {
+            query: ctx.query,
+            allProducts: ctx.store.getState().product.allProducts,
+        };
     }
 
     render() {
-        const { allProducts } = this.props;
+        const { allProducts, pagination, query } = this.props;
         return (
             <div className="site-content">
                 <HeaderTechnology />
@@ -38,7 +51,11 @@ class ShopDefaultPage extends React.Component {
                     <div className="ps-container">
                         <ShopBanner />
                         <SiteFeatures />
-                        <LayoutShop products={allProducts} />
+                        <LayoutShop
+                            products={allProducts}
+                            pagination={pagination}
+                            query={query}
+                        />
                     </div>
                 </div>
                 <FooterFullwidth />

@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 export const actionTypes = {
     GET_PRODUCTS: 'GET_PRODUCTS',
     GET_PRODUCTS_SUCCESS: 'GET_PRODUCTS_SUCCESS',
@@ -8,9 +10,14 @@ export const actionTypes = {
     GET_PRODUCTS_BY_KEYWORD: 'GET_PRODUCTS_BY_KEYWORD',
     GET_PRODUCT_BY_ID: 'GET_PRODUCT_BY_ID',
     GET_PRODUCT_BY_ID_SUCCESS: 'GET_PRODUCT_BY_ID_SUCCESS',
+    CHANGE_PRODUCT_PAGINATION: 'CHANGE_PRODUCT_PAGINATION',
+    GET_PRODUCTS_BY_CATEGORY_SUCCESS: 'GET_PRODUCTS_BY_CATEGORY_SUCCESS',
+    GET_ALL_CATEGORIES: 'GET_ALL_CATEGORIES',
+    GET_ALL_CATEGORIES_SUCCESS: 'GET_ALL_CATEGORIES_SUCCESS',
+    GET_ALL_CATEGORIES_FAIL: 'GET_ALL_CATEGORIES_FAIL',
 };
 
-export function getProducts() {
+export function getProducts(pagination) {
     return {
         type: actionTypes.GET_PRODUCTS,
         payload: {
@@ -18,9 +25,32 @@ export function getProducts() {
                 url: '/product/shop',
                 params: {
                     isVariant: false,
+                    page: pagination.currentPage,
+                    perpage: pagination.limit,
                 },
             },
         },
+    };
+}
+
+export function getAllCategories() {
+    return {
+        type: actionTypes.GET_ALL_CATEGORIES,
+        data: {},
+    };
+}
+
+export function getAllCategoriesSuccess(data) {
+    return {
+        type: actionTypes.GET_ALL_CATEGORIES_SUCCESS,
+        data,
+    };
+}
+
+export function getAllCategoriesFail(error) {
+    return {
+        type: actionTypes.GET_ALL_CATEGORIES_FAIL,
+        error,
     };
 }
 
@@ -48,7 +78,19 @@ export function getProductsError(error) {
 export function getProductsByCategory(category) {
     return {
         type: actionTypes.GET_PRODUCTS_BY_CATEGORY,
-        category,
+        payload: {
+            request: {
+                url: '/product/shop',
+                paramsSerializer: (params) =>
+                    qs.stringify(params, { indices: false }),
+                params: {
+                    isVariant: false,
+                    categoryId: [category],
+                    page: 1,
+                    perpage: 10,
+                },
+            },
+        },
     };
 }
 

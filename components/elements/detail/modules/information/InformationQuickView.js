@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addItem } from '../../../../../store/cart/action';
 import Link from 'next/link';
+import _map from 'lodash/map';
 class InformationQuickView extends Component {
     constructor(props) {
         super(props);
@@ -38,25 +39,16 @@ class InformationQuickView extends Component {
                 <div className="ps-product__meta"></div>
                 {product.sale === true ? (
                     <h4 className="ps-product__price sale">
-                        ${product.price} <del>${product.salePrice}</del>
+                        đ{product.price} <del>đ{product.salePrice}</del>
                     </h4>
                 ) : (
                     <h4 className="ps-product__price">${product.price}</h4>
                 )}
                 <div className="ps-product__desc">
                     <ul className="ps-list--dot">
-                        <li>
-                            {' '}
-                            Unrestrained and portable active stereo speaker
-                        </li>
-                        <li> Free from the confines of wires and chords</li>
-                        <li> 20 hours of portable capabilities</li>
-                        <li>
-                            {' '}
-                            Double-ended Coil Cord with 3.5mm Stereo Plugs
-                            Included
-                        </li>
-                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
+                        {_map(product.features, (f) => (
+                            <li>{f}</li>
+                        ))}
                     </ul>
                 </div>
                 <div className="ps-product__shopping">
@@ -94,27 +86,17 @@ class InformationQuickView extends Component {
                     </p>
                     <p className="categories">
                         <strong> Categories:</strong>
-                        <Link href="/shop">
-                            <a>Consumer Electronics</a>
-                        </Link>
-                        <Link href="/shop">
-                            <a>Refrigerator</a>
-                        </Link>
-                        <Link href="/shop">
-                            <a>Babies & Moms</a>
-                        </Link>
+                        {_map(product.categories, (c) => (
+                            <Link href={`/?category=${c.value}`}>
+                                <a>{c.name}</a>
+                            </Link>
+                        ))}
                     </p>
                     <p className="tags">
-                        <strong> Tags:</strong>
-                        <Link href="/shop">
-                            <a>sofa</a>
-                        </Link>
-                        <Link href="/shop">
-                            <a>technologies</a>
-                        </Link>
-                        <Link href="/shop">
-                            <a>wireless</a>
-                        </Link>
+                        <strong> Thẻ:</strong>
+                        {_map(product.tags, (t) => (
+                            <a>{t}</a>
+                        ))}
                     </p>
                 </div>
             </div>

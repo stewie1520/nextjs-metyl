@@ -1,9 +1,14 @@
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import { polyfill } from 'es6-promise';
 import { products } from '../../public/static/data/product';
+import axios from 'axios';
+
+const server = process.env.server;
 
 import {
     actionTypes,
+    getAllCategoriesSuccess,
+    getAllCategoriesFail,
     getProductsError,
     getProductsSuccess,
     getSingleProductsSuccess,
@@ -128,8 +133,22 @@ function* getProductByKeywordSaga({ keyword }) {
     }
 }
 
+function* getAllCategories() {
+    try {
+        const { data } = yield call(axios.get, server + '/categories');
+        if (data.success) {
+            yield put(getAllCategoriesSuccess(data.data));
+            return;
+        }
+
+        yield put(getAllCategoriesFail(data.message));
+    } catch (err) {
+        yield put(getAllCategoriesFail(err));
+    }
+}
+
 export default function* rootSaga() {
-    // yield all([takeEvery(actionTypes.GET_PRODUCTS, getProductsSaga)]);
+    yield all([takeEvery(actionTypes.GET_ALL_CATEGORIES, getAllCategories)]);
     // yield all([takeEvery(actionTypes.GET_PRODUCTS, getProductsSaga)]);
     // yield all([
     //     takeEvery(

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Product from '../../elements/products/Product';
 import ProductWide from '../../elements/products/ProductWide';
 import ShopWidget from './modules/ShopWidget';
 import BestSaleItems from './modules/BestSaleItems';
 import RecommendItems from './modules/RecommendItems';
+
+import _map from 'lodash/map';
+import _isUndefined from 'lodash/isUndefined';
 
 class LayoutShop extends Component {
     constructor(props) {
@@ -20,7 +24,11 @@ class LayoutShop extends Component {
     };
 
     render() {
-        const allProducts = this.props.products;
+        const { products: allProducts, pagination, query } = this.props;
+        const queryString = _isUndefined(query.category)
+            ? ''
+            : `&categoryId=${query.category}`;
+
         const viewMode = this.state.listView;
         return (
             <div className="ps-layout--shop">
@@ -111,21 +119,35 @@ class LayoutShop extends Component {
                             <div className="ps-shopping__footer">
                                 <div className="ps-pagination">
                                     <ul className="pagination">
+                                        {pagination.currentPage !== 1 && (
+                                            <li>
+                                                <a
+                                                    href={`?page=${
+                                                        pagination.currentPage -
+                                                        1
+                                                    }${queryString}`}>
+                                                    Trước
+                                                    <i className="icon-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                        )}
+
                                         <li className="active">
-                                            <a href="#">1</a>
+                                            <a>{pagination.currentPage}</a>
                                         </li>
-                                        <li>
-                                            <a href="#">2</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">3</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Tiếp
-                                                <i className="icon-chevron-right"></i>
-                                            </a>
-                                        </li>
+                                        {pagination.currentPage !==
+                                            pagination.totalPage && (
+                                            <li>
+                                                <a
+                                                    href={`?page=${
+                                                        pagination.currentPage +
+                                                        1
+                                                    }${queryString}`}>
+                                                    Tiếp
+                                                    <i className="icon-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        )}
                                     </ul>
                                 </div>
                             </div>
@@ -137,4 +159,7 @@ class LayoutShop extends Component {
     }
 }
 
-export default LayoutShop;
+const mapStateToProps = (state) => {
+    return state.product;
+};
+export default connect(mapStateToProps)(LayoutShop);

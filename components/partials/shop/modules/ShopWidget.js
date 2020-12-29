@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import {
     getProductsByPrice,
     getProductsByBrands,
+    getAllCategories,
 } from '../../../../store/product/action';
 import { Slider, Checkbox } from 'antd';
 import Link from 'next/link';
+import _isEqual from 'lodash/isEqual';
 
 class ShopWidget extends Component {
     constructor(props) {
@@ -25,63 +27,14 @@ class ShopWidget extends Component {
         this.props.dispatch(getProductsByPrice(value));
     }
 
-    handleFilterByBrand(value) {
-        Router.push({ pathname: '/shop', query: { brand: value } });
+    componentDidMount(prevProps, prevState) {
+        if (!_isEqual(this.props.categories, prevState)) {
+            this.props.dispatch(getAllCategories());
+        }
     }
 
     render() {
-        /* You can get categories from your API using redux */
-        const shopCategories = [
-            {
-                text: 'All Products',
-                url: '/',
-            },
-            {
-                text: 'Clothing & Apparel',
-                url: '/?category=clothing',
-            },
-            {
-                text: 'Garden & Kitchen',
-                url: '/?category=garden',
-            },
-            {
-                text: 'Consumer Electrics',
-                url: '/?category=electronic',
-            },
-            {
-                text: 'Health & Beauty',
-                url: '/?category=beauty',
-            },
-            {
-                text: 'Computers & Technologies',
-                url: '/?category=technologies',
-            },
-            {
-                text: 'Jewelry & Watches',
-                url: '/?category=jewelry',
-            },
-            {
-                text: 'Phones & Accessories',
-                url: '/?category=phone',
-            },
-            {
-                text: 'Sport & Outdoor',
-                url: '/?category=sport',
-            },
-            {
-                text: 'Babies & Moms',
-                url: '/?category=baby',
-            },
-            {
-                text: 'Books & Office',
-                url: '/?category=book',
-            },
-            {
-                text: 'Cars & Motocycles',
-                url: '/?category=cars',
-            },
-        ];
-
+        const { categories: shopCategories } = this.props;
         return (
             <div className="ps-layout__left">
                 <aside className="widget widget_shop">

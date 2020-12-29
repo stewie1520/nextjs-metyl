@@ -60,7 +60,7 @@ class ProductWide extends Component {
                         </Link>
                         <ul className="ps-product__desc">
                             {_map(product.features, (f) => (
-                                <li>${f}</li>
+                                <li>{f}</li>
                             ))}
                         </ul>
                     </div>
