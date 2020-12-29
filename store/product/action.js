@@ -16,6 +16,9 @@ export function getProducts() {
         payload: {
             request: {
                 url: '/product/shop',
+                params: {
+                    isVariant: false,
+                },
             },
         },
     };

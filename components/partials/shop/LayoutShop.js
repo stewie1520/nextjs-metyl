@@ -44,7 +44,7 @@ class LayoutShop extends Component {
                                     <option>Theo thời gian</option>
                                     <option>Theo độ phổ biến</option>
                                     <option>Giá tăng dần</option>
-                                    <option>Giá bán dần</option>
+                                    <option>Giá giảm dần</option>
                                 </select>
                                 <div className="ps-shopping__view">
                                     <p>Hiển thị</p>

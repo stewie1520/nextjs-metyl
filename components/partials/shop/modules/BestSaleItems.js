@@ -9,12 +9,12 @@ class BestSaleItems extends Component {
         super(props);
     }
 
-    handleCarouselPrev = e => {
+    handleCarouselPrev = (e) => {
         e.preventDefault();
         this.slider.slickPrev();
     };
 
-    handleCarouselNext = e => {
+    handleCarouselNext = (e) => {
         e.preventDefault();
         this.slider.slickNext();
     };
@@ -69,7 +69,7 @@ class BestSaleItems extends Component {
         return (
             <div className="ps-block--shop-features">
                 <div className="ps-block__header">
-                    <h3>Best Sale Items</h3>
+                    <h3>Sản phẩm bán chạy</h3>
                     <div className="ps-block__navigation">
                         <a
                             className="ps-carousel__prev"
@@ -85,7 +85,7 @@ class BestSaleItems extends Component {
                 </div>
                 <div className="ps-block__content">
                     <Slider
-                        ref={slider => (this.slider = slider)}
+                        ref={(slider) => (this.slider = slider)}
                         {...carouselSetting}>
                         {products.map((product, index) => {
                             if (index > 6 && index < 15) {

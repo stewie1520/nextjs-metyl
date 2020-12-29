@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { addItem } from '../../../store/cart/action';
+import _map from 'lodash/map';
 
 class ProductWide extends Component {
     constructor(props) {
@@ -58,16 +59,9 @@ class ProductWide extends Component {
                             <a className="ps-product__title">{product.title}</a>
                         </Link>
                         <ul className="ps-product__desc">
-                            <li>
-                                Unrestrained and portable active stereo speaker
-                            </li>
-                            <li> Free from the confines of wires and chords</li>
-                            <li> 20 hours of portable capabilities</li>
-                            <li>
-                                Double-ended Coil Cord with 3.5mm Stereo Plugs
-                                Included
-                            </li>
-                            <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
+                            {_map(product.features, (f) => (
+                                <li>${f}</li>
+                            ))}
                         </ul>
                     </div>
                     <div className="ps-product__shopping">
@@ -90,7 +84,7 @@ class ProductWide extends Component {
                             className="ps-btn"
                             href="#"
                             onClick={this.handleAddItemToCart.bind(this)}>
-                            Thêm vào giỏ hàng
+                            Thêm
                         </a>
                     </div>
                 </div>

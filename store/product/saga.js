@@ -1,7 +1,6 @@
 import { all, put, takeEvery, call } from 'redux-saga/effects';
 import { polyfill } from 'es6-promise';
 import { products } from '../../public/static/data/product';
-import * as productsApi from '../../apis/products';
 
 import {
     actionTypes,

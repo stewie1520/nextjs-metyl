@@ -326,6 +326,11 @@
             text-align: center;
             font-weight: 600;
             padding: 11px 20px;
+            color: $color-heading;
+
+            &:hover {
+                background-color: $color-1st-darker;
+            }
         }
 
         .ps-product__actions {
