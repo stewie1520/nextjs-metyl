@@ -24,6 +24,8 @@ const StyleSheets = () => (
             href="/static/fonts/Linearicons/Font/demo-files/demo.css"
         />
 
+        <link rel="stylesheet" type="text/css" href="/static/css/nprogress.css" />
+
         <link
             rel="stylesheet"
             href="/static/fonts/font-awesome/css/font-awesome.min.css"

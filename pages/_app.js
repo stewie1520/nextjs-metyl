@@ -8,8 +8,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 import createStore from '../store/store';
 import DefaultLayout from '../components/layouts/DefaultLayout.js';
 import Alert from '../components/layouts/Alert';
+import NProgress from 'nprogress';
+import Router from 'next/router';
 
 import '../scss/style.scss';
+
+NProgress.configure({ showSpinner: true });
+
+Router.onRouteChangeStart = () => {
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+  NProgress.done();
+};
 
 class MyApp extends App {
     constructor(props) {
