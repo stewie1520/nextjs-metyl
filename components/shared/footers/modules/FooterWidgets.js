@@ -68,7 +68,7 @@ const FooterWidgets = () => (
                     </Link>
                 </li>
                 <li>
-                    <Link href="/page/blank">
+                    <Link href="https://admin-mu-two.vercel.app">
                         <a>Trang dành cho nhân viên</a>
                     </Link>
                 </li>
