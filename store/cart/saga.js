@@ -15,6 +15,10 @@ import {
     clearCartSuccess,
     confirmCartFail,
     confirmCartSuccess,
+    changeProvinceSuccess,
+    changeProvinceFail,
+    changeDistrictSuccess,
+    changeDistrictFail,
     clearCart,
 } from './action';
 
@@ -206,6 +210,34 @@ function* clearCartSaga() {
     }
 }
 
+function* changeProvinceSaga({ payload: pid }) {
+    try {
+        const { data } = yield call(
+            axios.get,
+            process.env.apiLocationEndpoint +
+                `/districts?size=100&provinceId.equals=${pid}`
+        );
+
+        yield put(changeProvinceSuccess(data));
+    } catch (err) {
+        yield put(changeProvinceFail(err));
+    }
+}
+
+function* changeDistrictSaga({ payload: did }) {
+    try {
+        const { data } = yield call(
+            axios.get,
+            process.env.apiLocationEndpoint +
+                `/wards?size=100&districtId.equals=${did}`
+        );
+
+        yield put(changeDistrictSuccess(data));
+    } catch (err) {
+        yield put(changeDistrictFail(err));
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeEvery(actionTypes.CONFIRM_CART, confirmCartSaga)]);
     yield all([takeEvery(actionTypes.GET_CART, getCartSaga)]);
@@ -214,4 +246,6 @@ export default function* rootSaga() {
     yield all([takeEvery(actionTypes.INCREASE_QTY, increaseQtySaga)]);
     yield all([takeEvery(actionTypes.DECREASE_QTY, decreaseItemQtySaga)]);
     yield all([takeEvery(actionTypes.CLEAR_CART, clearCartSaga)]);
+    yield all([takeEvery(actionTypes.CHANGE_PROVINCE, changeProvinceSaga)]);
+    yield all([takeEvery(actionTypes.CHANGE_DISTRICT, changeDistrictSaga)]);
 }

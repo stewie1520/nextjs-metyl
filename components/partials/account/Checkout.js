@@ -9,7 +9,15 @@ class Checkout extends Component {
     }
 
     render() {
-        const { amount, cartTotal, cartItems, isProcessingCart } = this.props;
+        const {
+            amount,
+            cartTotal,
+            cartItems,
+            isProcessingCart,
+            provinces,
+            districts,
+            wards,
+        } = this.props;
         return (
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
@@ -21,7 +29,10 @@ class Checkout extends Component {
                             amount={amount}
                             cartTotal={cartTotal}
                             cartItems={cartItems}
+                            provinces={provinces}
                             isProcessingCart={isProcessingCart}
+                            districts={districts}
+                            wards={wards}
                         />
                     </div>
                 </div>

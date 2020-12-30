@@ -5,7 +5,9 @@ import BreadCrumb from '../../components/elements/BreadCrumb';
 import Checkout from '../../components/partials/account/Checkout';
 import HeaderMobile from '../../components/shared/headers/HeaderMobile';
 import NavigationList from '../../components/shared/navigation/NavigationList';
-const OrderTrackingPage = () => {
+import axios from 'axios';
+
+const OrderTrackingPage = ({ provinces }) => {
     const breadCrumb = [
         {
             text: 'Trang chủ',
@@ -26,11 +28,27 @@ const OrderTrackingPage = () => {
             <NavigationList />
             <div className="ps-page--simple">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Checkout />
+                <Checkout provinces={provinces} />
             </div>
             <FooterFullwidth />
         </div>
     );
+};
+
+OrderTrackingPage.getInitialProps = async (context) => {
+    try {
+        const { data: provinces } = await axios.get(
+            `${process.env.apiLocationEndpoint}/provinces?size=100`
+        );
+
+        return {
+            provinces,
+        };
+    } catch {
+        return {
+            provinces: [],
+        };
+    }
 };
 
 export default OrderTrackingPage;

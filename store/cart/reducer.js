@@ -2,6 +2,8 @@ import { actionTypes } from './action';
 
 export const initCart = {
     cartItems: [],
+    districts: [],
+    wards: [],
     amount: 0,
     cartTotal: 0,
     isProcessingCart: false,
@@ -62,6 +64,41 @@ function reducer(state = initCart, action) {
             return {
                 ...state,
                 ...{ error: action.error },
+            };
+        case actionTypes.CHANGE_PROVINCE:
+            return {
+                ...state,
+                ...{ isProcessingCart: true, districts: [], wards: [] },
+            };
+        case actionTypes.CHANGE_PROVINCE_SUCCESS:
+            return {
+                ...state,
+                ...{
+                    isProcessingCart: false,
+                    districts: action.payload,
+                    wards: [],
+                },
+            };
+        case actionTypes.CHANGE_PROVINCE_FAIL:
+            return {
+                ...state,
+                ...{ isProcessingCart: false, districts: [], wards: [] },
+            };
+
+        case actionTypes.CHANGE_DISTRICT:
+            return {
+                ...state,
+                ...{ isProcessingCart: true, wards: [] },
+            };
+        case actionTypes.CHANGE_DISTRICT_SUCCESS:
+            return {
+                ...state,
+                ...{ isProcessingCart: false, wards: action.payload },
+            };
+        case actionTypes.CHANGE_DISTRICT_FAIL:
+            return {
+                ...state,
+                ...{ isProcessingCart: false, wards: [] },
             };
         default:
             return state;

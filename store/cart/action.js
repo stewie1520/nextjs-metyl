@@ -29,6 +29,13 @@ export const actionTypes = {
     CONFIRM_CART: 'CONFIRM_CART',
     CONFIRM_CART_SUCCESS: 'CONFIRM_CART_SUCCESS',
     CONFIRM_CART_FAIL: 'CONFIRM_CART_FAIL',
+    CHANGE_PROVINCE: 'CHANGE_PROVINCE',
+    CHANGE_PROVINCE_SUCCESS: 'CHANGE_PROVINCE_SUCCESS',
+    CHANGE_PROVINCE_FAIL: 'CHANGE_PROVINCE_FAIL',
+
+    CHANGE_DISTRICT: 'CHANGE_DISTRICT',
+    CHANGE_DISTRICT_SUCCESS: 'CHANGE_DISTRICT_SUCCESS',
+    CHANGE_DISTRICT_FAIL: 'CHANGE_DISTRICT_FAIL',
 };
 
 export function confirmCart(payload) {
@@ -45,6 +52,30 @@ export function confirmCartFail(error) {
 
 export function getCart() {
     return { type: actionTypes.GET_CART };
+}
+
+export function changeProvince(pid) {
+    return { type: actionTypes.CHANGE_PROVINCE, payload: pid };
+}
+
+export function changeProvinceSuccess(data) {
+    return { type: actionTypes.CHANGE_PROVINCE_SUCCESS, payload: data };
+}
+
+export function changeProvinceFail(err) {
+    return { type: actionTypes.CHANGE_PROVINCE_FAIL, payload: err };
+}
+
+export function changeDistrict(did) {
+    return { type: actionTypes.CHANGE_DISTRICT, payload: did };
+}
+
+export function changeDistrictSuccess(data) {
+    return { type: actionTypes.CHANGE_DISTRICT_SUCCESS, payload: data };
+}
+
+export function changeDistrictFail(err) {
+    return { type: actionTypes.CHANGE_DISTRICT_FAIL, payload: err };
 }
 
 export function getCartSuccess() {

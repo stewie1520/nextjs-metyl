@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 import Router from 'next/router';
-import { confirmCart } from '../../../../store/cart/action';
+import {
+    confirmCart,
+    changeProvince,
+    changeDistrict,
+} from '../../../../store/cart/action';
 
-import { Form, Input, Spin } from 'antd';
+import { Form, Input, Spin, Select } from 'antd';
+import _isEmpty from 'lodash/isEmpty';
 
 class FormCheckoutInformation extends Component {
     constructor(props) {
@@ -25,6 +30,36 @@ class FormCheckoutInformation extends Component {
                     district: values.district,
                     note: values.note,
                 };
+
+                const { provinces, districts = [], wards = [] } = this.props;
+
+                if (!_isEmpty(provinces)) {
+                    const foundProvince = provinces.find(
+                        (p) => p.id === addressInfo.city
+                    );
+                    if (foundProvince) {
+                        addressInfo.city = foundProvince.name;
+                    }
+                }
+
+                if (!_isEmpty(districts)) {
+                    const foundDistrict = districts.find(
+                        (d) => d.id === addressInfo.district
+                    );
+                    if (foundDistrict) {
+                        addressInfo.district = foundDistrict.name;
+                    }
+                }
+
+                if (!_isEmpty(wards)) {
+                    const foundWard = wards.find(
+                        (w) => w.id === addressInfo.ward
+                    );
+                    if (foundWard) {
+                        addressInfo.ward = foundWard.name;
+                    }
+                }
+
                 this.props.dispatch(
                     confirmCart({
                         addressInfo,
@@ -37,9 +72,26 @@ class FormCheckoutInformation extends Component {
         });
     };
 
+    handleChangeProvince = (pid) => {
+        this.props.dispatch(changeProvince(pid));
+    };
+
+    handleChangeDistrict = (did) => {
+        this.props.dispatch(changeDistrict(did));
+    };
+
     render() {
+        const { Option } = Select;
         const { getFieldDecorator } = this.props.form;
-        const { amount, cartItems, cartTotal, isProcessingCart } = this.props;
+        const {
+            amount,
+            cartItems,
+            cartTotal,
+            isProcessingCart,
+            provinces,
+            districts = [],
+            wards = [],
+        } = this.props;
         return (
             <Spin tip="Đang xử lý..." spinning={isProcessingCart}>
                 <Form
@@ -154,11 +206,45 @@ class FormCheckoutInformation extends Component {
                                                             },
                                                         ],
                                                     })(
-                                                        <Input
-                                                            className="form-control"
-                                                            type="city"
-                                                            placeholder="Tỉnh thành"
-                                                        />
+                                                        _isEmpty(provinces) ? (
+                                                            <Input
+                                                                className="form-control"
+                                                                type="city"
+                                                                placeholder="Tỉnh thành"
+                                                            />
+                                                        ) : (
+                                                            <Select
+                                                                style={{
+                                                                    height:
+                                                                        '100%',
+                                                                }}
+                                                                label="Tỉnh thành"
+                                                                type="city"
+                                                                onChange={(
+                                                                    value
+                                                                ) =>
+                                                                    this.handleChangeProvince(
+                                                                        value
+                                                                    )
+                                                                }
+                                                                className="form-control">
+                                                                {provinces.map(
+                                                                    (p) => (
+                                                                        <Option
+                                                                            value={
+                                                                                p.id
+                                                                            }
+                                                                            id={
+                                                                                p.id
+                                                                            }>
+                                                                            {
+                                                                                p.name
+                                                                            }
+                                                                        </Option>
+                                                                    )
+                                                                )}
+                                                            </Select>
+                                                        )
                                                     )}
                                                 </Form.Item>
                                             </div>
@@ -178,11 +264,45 @@ class FormCheckoutInformation extends Component {
                                                             ],
                                                         }
                                                     )(
-                                                        <Input
-                                                            className="form-control"
-                                                            type="district"
-                                                            placeholder="Quận huyện"
-                                                        />
+                                                        _isEmpty(districts) ? (
+                                                            <Input
+                                                                className="form-control"
+                                                                type="district"
+                                                                placeholder="Quận huyện"
+                                                            />
+                                                        ) : (
+                                                            <Select
+                                                                style={{
+                                                                    height:
+                                                                        '100%',
+                                                                }}
+                                                                type="district"
+                                                                label="Quận huyện"
+                                                                onChange={(
+                                                                    value
+                                                                ) =>
+                                                                    this.handleChangeDistrict(
+                                                                        value
+                                                                    )
+                                                                }
+                                                                className="form-control">
+                                                                {districts.map(
+                                                                    (d) => (
+                                                                        <Option
+                                                                            value={
+                                                                                d.id
+                                                                            }
+                                                                            id={
+                                                                                d.id
+                                                                            }>
+                                                                            {
+                                                                                d.name
+                                                                            }
+                                                                        </Option>
+                                                                    )
+                                                                )}
+                                                            </Select>
+                                                        )
                                                     )}
                                                 </Form.Item>
                                             </div>
@@ -199,11 +319,38 @@ class FormCheckoutInformation extends Component {
                                                             },
                                                         ],
                                                     })(
-                                                        <Input
-                                                            className="form-control"
-                                                            type="ward"
-                                                            placeholder="Phường xã"
-                                                        />
+                                                        _isEmpty(wards) ? (
+                                                            <Input
+                                                                className="form-control"
+                                                                type="ward"
+                                                                placeholder="Phường xã"
+                                                            />
+                                                        ) : (
+                                                            <Select
+                                                                style={{
+                                                                    height:
+                                                                        '100%',
+                                                                }}
+                                                                type="ward"
+                                                                label="Phường xã"
+                                                                className="form-control">
+                                                                {wards.map(
+                                                                    (w) => (
+                                                                        <Option
+                                                                            value={
+                                                                                w.name
+                                                                            }
+                                                                            id={
+                                                                                w.id
+                                                                            }>
+                                                                            {
+                                                                                w.name
+                                                                            }
+                                                                        </Option>
+                                                                    )
+                                                                )}
+                                                            </Select>
+                                                        )
                                                     )}
                                                 </Form.Item>
                                             </div>
