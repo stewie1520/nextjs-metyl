@@ -35,7 +35,7 @@ module.exports = withPlugins([
                 env: {
                     apiLocationEndpoint:
                         'https://dc.tintoc.net/app/api-customer/public',
-                    server: 'https://blackping.azurewebsites.net',
+                    server: 'http://webbanhang:5000',
                 },
             })
         ),
